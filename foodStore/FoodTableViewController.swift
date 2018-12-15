@@ -8,16 +8,37 @@
 
 import UIKit
 
-class FoodTableViewController: UITableViewController {
+class FoodTableViewController: UITableViewController, UITextFieldDelegate {
     
-     var meals = [Meal]()
 
+    @IBOutlet weak var nameTextField: UILabel!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var ratingControl: RatingControl!
+    
+    var meals = [Meal]()
+
+    var meal : Meal?
+    
+    
     override func viewDidLoad() {
         print("Text!!")
         super.viewDidLoad()
-        let meal1 = Meal(name: "Silpancho", photo: UIImage(named: "silpancho"), rating: 0)!
-        let meal2 = Meal(name: "Pique", photo: UIImage(named: "pique"), rating: 0)!
-        meals += [meal1, meal2]
+        //let meal1 = Meal(name: "Silpancho", photo: UIImage(named: "silpancho"), rating: 0)!
+        //let meal2 = Meal(name: "Pique", photo: UIImage(named: "pique"), rating: 0)!
+        //meals += [meal1, meal2]
+        
+        navigationItem.leftBarButtonItem = editButtonItem
+        
+       // nameTextField.delegate = self
+        if let meal = meal{
+            self.navigationItem.title = meal.name
+            self.nameTextField.text = meal.name
+            self.photoImageView.image = meal.photo
+            self.ratingControl.rating = meal.rating
+            
+        }
+        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -105,5 +126,95 @@ class FoodTableViewController: UITableViewController {
     }
     */
     
+    @IBAction func unwindToMealList(send: UIStoryboardSegue){
+        print("unwip!!!!")
+        
+        if let sourceViewController = send.source as? FoodDetailViewController, let meal = sourceViewController.meal{
+            print("The new meal es --> \(meal.name)")
+            
+            if let selectedIndexPath = tableView.indexPathForSelectedRow{
+                meals[selectedIndexPath.row] = meal
+                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+            }else{
+                let newIndexPath = IndexPath(row: meals.count, section:0)
+                meals.append(meal)
+                print("The meal name is \(meal.name)")
+                //
+                tableView.insertRows(at:[newIndexPath], with: .automatic)
+            }
+            
+            meals.append(meal)
+            tableView.reloadData()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle:UITableViewCellEditingStyle, forRowAt indexPath:IndexPath){
+        if editingStyle == .delete{
+            meals.remove(at:indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }else if editingStyle == .insert{
+            
+        }
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+            
+        case "AddItem":
+            print("add Item")
+            //os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+            
+        case "ShowDetail":
+            print("Show Detal")
+            
+            guard let mealDetailViewController = segue.destination as? FoodDetailViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedMealCell = sender as? FoodTableViewCell else {
+                fatalError("Unexpected sender: \(sender)")
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            let selectedMeal = meals[indexPath.row]
+            
+            mealDetailViewController.meal = selectedMeal
+            
+        default:
+            print("Default")
+            //fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+        }
+    }
+    
+    
+    // Cancel Button in ViewCOntroller
+
+    @IBAction func cancelButtonClick(_ sender: Any) {
+        print("click!!dismiss")
+        dismiss(animated: true, completion: nil)
+        
+        let isPresentingInAddMealMode = presentingViewController is UINavigationController
+        
+        if isPresentingInAddMealMode {
+            dismiss(animated: true, completion: nil)
+        }
+        else if let owningNavigationController = navigationController{
+            owningNavigationController.popViewController(animated: true)
+        }
+        else {
+            fatalError("The MealViewController is not inside a navigation controller.")
+        }
+    }
+    
+    
+
 
 }

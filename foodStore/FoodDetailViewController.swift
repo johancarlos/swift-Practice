@@ -13,11 +13,23 @@ class FoodDetailViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mealNameLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var ratingControl: RatingControl!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    var meal:Meal?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Aplication Loadded")
+        
+        nameTextField.delegate = self
+        if let meal = meal{
+            self.navigationItem.title = meal.name
+            self.nameTextField.text = meal.name
+            self.photoImageView.image = meal.photo
+            self.ratingControl.rating = meal.rating
+        }
         
 
         // Do any additional setup after loading the view.
@@ -67,6 +79,18 @@ class FoodDetailViewController: UIViewController, UITextFieldDelegate, UIImagePi
         dismiss(animated:true, completion: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        super.prepare(for:segue, sender:sender)
+        if let button = sender as? UIBarButtonItem, button === saveButton{
+            let name = nameTextField.text ?? ""
+            let photo = photoImageView.image
+            let raiting = ratingControl.rating
+            meal = Meal(name: name, photo: photo, rating: raiting)
+            print("Send new meal")
+        }else{
+            print("cancel button pressed")
+        }
+    }
     
     
 }
