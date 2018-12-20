@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB04538D21CB17AB00E174E7 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB04538C21CB17AB00E174E7 /* MapViewController.swift */; };
 		DB25C81621C53D5800864B43 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C81521C53D5800864B43 /* Meal.swift */; };
 		DB25C81821C5402700864B43 /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C81721C5402700864B43 /* FoodTableViewCell.swift */; };
 		DB25C81A21C5426A00864B43 /* FoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB25C81921C5426A00864B43 /* FoodTableViewController.swift */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB04538C21CB17AB00E174E7 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		DB04538F21CB18E400E174E7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DB25C81521C53D5800864B43 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		DB25C81721C5402700864B43 /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 		DB25C81921C5426A00864B43 /* FoodTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +48,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB04538E21CB18E400E174E7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB04538F21CB18E400E174E7 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DB25C81421C53CFD00864B43 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +69,7 @@
 			children = (
 				DB44974521C325FD006A0DFA /* foodStore */,
 				DB44974421C325FD006A0DFA /* Products */,
+				DB04538E21CB18E400E174E7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,6 +95,7 @@
 				DB44975A21C340D5006A0DFA /* RatingControl.swift */,
 				DB25C81721C5402700864B43 /* FoodTableViewCell.swift */,
 				DB25C81921C5426A00864B43 /* FoodTableViewController.swift */,
+				DB04538C21CB17AB00E174E7 /* MapViewController.swift */,
 			);
 			path = foodStore;
 			sourceTree = "<group>";
@@ -166,6 +179,7 @@
 				DB44974921C325FF006A0DFA /* ViewController.swift in Sources */,
 				DB44974721C325FF006A0DFA /* AppDelegate.swift in Sources */,
 				DB25C81821C5402700864B43 /* FoodTableViewCell.swift in Sources */,
+				DB04538D21CB17AB00E174E7 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
